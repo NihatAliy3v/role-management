@@ -1,10 +1,10 @@
-const moongose = require("mongoose");
+const mongoose = require("mongoose");
 
-const schema = moongose.Schema(
+const schema = mongoose.Schema(
   {
     email: { type: String, required: true },
     password: { type: String, required: true },
-    is_active: { type: Boolean, required: true },
+    is_active: { type: Boolean, default: true },
     first_name: { type: String, required: true },
     last_name: String,
     phone_number: String,

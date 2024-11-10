@@ -75,13 +75,19 @@ router.put("/:id", async (req, res) => {
       body.permissions.length >= 0
     ) {
       let permissions = await RolePrivileges.find({ role_id: params.id });
-      let removedPermissions = permissions.filter(x=>!body.permissions.includes(x.permission))
-      let newPermissions = body.permissions.filter(x=>!permissions.map(p=>p.permission).includes(x));
+      let removedPermissions = permissions.filter(
+        (x) => !body.permissions.includes(x.permission)
+      );
+      let newPermissions = body.permissions.filter(
+        (x) => !permissions.map((p) => p.permission).includes(x)
+      );
 
-      if(removedPermissions.length>0){
-        await RolePrivileges.deleteMany({_id:{$in:removedPermissions.map(x=>x._id)}});
+      if (removedPermissions.length > 0) {
+        await RolePrivileges.deleteMany({
+          _id: { $in: removedPermissions.map((x) => x._id) },
+        });
       }
-      if(newPermissions.length>0){
+      if (newPermissions.length > 0) {
         for (let i = 0; i < newPermissions.length; i++) {
           const rolePrivs = new RolePrivileges({
             role_id: params.id,
@@ -90,7 +96,6 @@ router.put("/:id", async (req, res) => {
           await rolePrivs.save();
         }
       }
-      
     }
 
     const update = {};
@@ -119,7 +124,7 @@ router.delete("/:id", async (req, res) => {
     }
 
     const roles = await Roles.deleteOne({ _id: params.id });
-    if (roles.deletedCount===0) {
+    if (roles.deletedCount === 0) {
       throw new CustomError(
         Enum.HTTP_CODES.BAD_REQUEST,
         "Validation Error!",

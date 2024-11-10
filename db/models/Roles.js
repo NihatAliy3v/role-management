@@ -1,8 +1,7 @@
-const { default: mongoose } = require("mongoose");
-const moongose = require("mongoose");
+const mongoose = require("mongoose");
 const RolePrivileges = require("./RolePrivileges");
 
-const schema = moongose.Schema(
+const schema = mongoose.Schema(
   {
     role_name: { type: String, required: true,unique:true },
     is_active: { type: Boolean, default: true },

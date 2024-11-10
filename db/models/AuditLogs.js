@@ -20,4 +20,4 @@ const schema = mongoose.Schema(
 class AuditLogs extends mongoose.Model {}
 
 schema.loadClass(AuditLogs);
-module.exports = schema.model("audit_logs", schema);
+module.exports = mongoose.model("audit_logs", schema);

@@ -3,6 +3,7 @@ const Categories = require("../db/models/Caregories");
 const Response = require("../lib/Response");
 const CustomError = require("../lib/Error");
 const Enum = require("../config/Enum");
+const AuditLogs = require("../lib/AuditLogs");
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
@@ -27,6 +28,7 @@ router.post("/", async (req, res) => {
       is_active: true,
     });
     await category.save();
+    AuditLogs.info(req.user?.email,"Categories","Add","Added");
     res.json(Response.successResponse({ message: "elave edildi" }));
   } catch (err) {
     const errorResponse = Response.errorResponse(err);
